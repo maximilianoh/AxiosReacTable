@@ -1,13 +1,15 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
-import TableHeaders from './TableHeaders.js';
-import TableBodyData from './TableBodyData.js';
+import CancelRequest from './CancelRequest.js';
+import TableContent from './TableContent.js';
+import TablePagButton from './TablePagButton.js'
 
 
-function HookSimpleTable() {
+function HookSimpleTable(props) {
     const titles2=['Firstname','Username','ID'];
-    const pagination2=3;
+    const pagination2=5;
+    const [cancel2, setCancel2] = useState(false);
     const [initIndex2, setInitIndex2] = useState(0);
     const [data2, setData2] = useState([]);
     const [dataFilter2, setDataFilter2] = useState([]);
@@ -16,7 +18,7 @@ function HookSimpleTable() {
    function nextFilterData2(operation){
         if (operation==='>'){
             let valor=initIndex2+pagination2;
-            if (valor<=data2.length){
+            if (valor<data2.length){
                 setInitIndex2(valor);
             }
         }
@@ -30,19 +32,28 @@ function HookSimpleTable() {
     }
 
     useEffect(() => {
-        const getPosts = ()=>{axios
-            .get('https://jsonplaceholder.typicode.com/users')
+        let isSubscribed = true
+        if(props.mode==="cancel"){
+            props.source.cancel('Operation canceled');
+            setDataLoaded2(true);
+            setCancel2(true);
+        }
+        const getPosts = ()=>{
+            axios.get('https://jsonplaceholder.typicode.com/users', props.objectAxios)
             .then(result => {
-                setData2(result.data);
-                setDataLoaded2(true);
+                if (isSubscribed) {
+                    setData2(result.data);
+                    setDataLoaded2(true);
+                }
             })
             .catch(e => {
-                console.log(e);
+                console.log(e.message);
             })
             ;
         }
         getPosts();
-    }, [])
+        return () => isSubscribed = false
+    }, [props,setCancel2])
 
     useEffect(() => {
         //we truly aren’t using anything from the outer scope of the component in our effect
@@ -55,25 +66,14 @@ function HookSimpleTable() {
     function isVisibleTable(){
         if (dataLoaded2){
             return <React.Fragment>
-                <div className="Table-div">
-                    <table>
-                        <thead>
-                            <TableHeaders titles={titles2}/>
-                        </thead>
-                        <tbody>
-                            <TableBodyData data={dataFilter2}/>
-                        </tbody>
-                    </table>
-                </div>
-                <div className="Buttons">
-                    <button onClick={(e) => nextFilterData2('<')} className="Button-option">
-                        Prev
-                    </button>
-
-                    <button onClick={(e) => nextFilterData2('>')} className="Button-option">
-                        Next
-                    </button>
-                </div>
+            { cancel2?
+                        <CancelRequest/>
+                        :
+                        <React.Fragment>
+                            <TableContent titles={titles2} copyData={dataFilter2}/>
+                            <TablePagButton fun={nextFilterData2}/>
+                        </React.Fragment>
+            }
             </React.Fragment>;
         }
         else return true

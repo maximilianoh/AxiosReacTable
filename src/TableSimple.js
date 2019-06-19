@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
-import TableHeaders from './TableHeaders.js';
-import TableBodyData from './TableBodyData.js';
+import CancelRequest from './CancelRequest.js';
+import TableContent from './TableContent.js';
+import TablePagButton from './TablePagButton.js'
 
 class TableSimple extends React.Component {
     constructor(props) {
@@ -14,14 +15,17 @@ class TableSimple extends React.Component {
             titles:['Firstname','Username','ID'],
             pagination:3,
             initIndex:0,
-        }
+            cancel:false
+        };
+        this._isMounted = false;
+        this.nextFilterData=this.nextFilterData.bind(this);
     }
 
     nextFilterData(operation){
         let {data,initIndex,pagination}=this.state
         if (operation==='>'){
             let valor=initIndex+pagination;
-            if (valor<=data.length){
+            if (valor<data.length){
                 this.setState({ initIndex: valor });
             }
         }
@@ -34,15 +38,28 @@ class TableSimple extends React.Component {
     }
     
     componentDidMount() {
-		axios.get('https://jsonplaceholder.typicode.com/users')
-			.then(response => {
+        this._isMounted = true
+        if(this.props.mode==="cancel"){
+            this.props.source.cancel('Operation canceled');
+            this.setState({ cancel: true });
+            this.setState({ loaded: true });
+
+        }
+        axios.get('https://jsonplaceholder.typicode.com/users', this.props.objectAxios)
+        .then(response => {
+            if (this._isMounted) {
                 this.setState({ data: response.data });
-                //this.changeFilerData(0);
                 this.setState({ loaded: true });
-			})
-            .catch(e => {
-                console.log(e);
-            });
+            }
+        })
+        .catch(function (thrown) {
+          if ((thrown)) {
+            console.log('Request canceled', thrown.message);
+          } else {
+            console.log(thrown)
+          }
+        });
+
     }
     componentDidUpdate(prevProps, prevState) {
         if (prevState.initIndex !== this.state.initIndex || prevState.data!==this.state.data) {
@@ -53,30 +70,22 @@ class TableSimple extends React.Component {
             this.setState({ copyData: dataFilter });
         }
     }
-    
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     isVisibleTable(){
-        let {titles,copyData,loaded}=this.state
+        let {titles,copyData,loaded,cancel}=this.state
         if (loaded){
             return <React.Fragment>
-                <div className="Table-div">
-                    <table>
-                        <thead>
-                            <TableHeaders titles={titles}/>
-                        </thead>
-                        <tbody>
-                            <TableBodyData data={copyData}/>
-                        </tbody>
-                    </table>
-                </div>
-                <div className="Buttons">
-                    <button onClick={(e) => this.nextFilterData('<')} className="Button-option">
-                        Prev
-                    </button>
-
-                    <button onClick={(e) =>this.nextFilterData('>')} className="Button-option">
-                        Next
-                    </button>
-                </div>
+            { cancel?
+                        <CancelRequest/>
+                        :
+                        <React.Fragment>
+                            <TableContent titles={titles} copyData={copyData}/>
+                            <TablePagButton fun={this.nextFilterData}/>
+                        </React.Fragment>
+            }
             </React.Fragment>;
         }
         else return true
@@ -84,7 +93,6 @@ class TableSimple extends React.Component {
 
 
     render() {
-        
         return (
             this.isVisibleTable()
         );

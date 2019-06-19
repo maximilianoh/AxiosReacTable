@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
-import TableHeaders from './TableHeaders.js';
-import TableBodyData from './TableBodyData.js';
+import CancelRequest from './CancelRequest.js';
+import TableContent from './TableContent.js';
+import TablePagButton from './TablePagButton.js'
 
 class TableSimpleAsyncAwait extends React.Component {
     constructor(props) {
@@ -12,15 +13,18 @@ class TableSimpleAsyncAwait extends React.Component {
             data3:[],
             copyData3:[],
             titles3:['Firstname','Username','ID'],
-            pagination3:3,
+            pagination3:4,
             initIndex3:0,
-        }
+            cancel3:false
+        };
+        this._isMounted = false;
+        this.nextFilterData3=this.nextFilterData3.bind(this);
     }
     nextFilterData3(operation){
         let {data3,initIndex3,pagination3}=this.state
         if (operation==='>'){
             let valor=initIndex3+pagination3;
-            if (valor<=data3.length){
+            if (valor<data3.length){
                 this.setState({ initIndex3: valor });
             }
         }
@@ -33,12 +37,24 @@ class TableSimpleAsyncAwait extends React.Component {
     }
     
     async componentDidMount() {
+        this._isMounted = true
         try {
-            let res = await axios.get('https://jsonplaceholder.typicode.com/users');
-            this.setState({ data3: res.data });
-            this.setState({ loaded3: true })
-        } catch(error) {
-             console.log(error)
+            if(this.props.mode==="cancel"){
+                this.props.source.cancel('Operation canceled');
+                this.setState({ cancel3: true });
+                this.setState({ loaded3: true });
+            }
+            let res = await axios.get('https://jsonplaceholder.typicode.com/users',this.props.objectAxios);
+            if (this._isMounted) {
+                this.setState({ data3: res.data });
+                this.setState({ loaded3: true });
+            }
+        } catch(thrown) {
+             if (axios.isCancel(thrown)) {
+                console.log('Request canceled', thrown.message);
+              } else {
+                console.log(thrown)
+              }
         }
         
     }
@@ -52,31 +68,23 @@ class TableSimpleAsyncAwait extends React.Component {
             this.setState({ copyData3: dataFilter });
         }
     }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
     
     isVisibleTable(){
-        let {titles3,copyData3,loaded3}=this.state
+        let {titles3,copyData3,loaded3,cancel3}=this.state
         if (loaded3){
             return <React.Fragment>
-                <div className="Table-div">
-                    <table>
-                        <thead>
-                            <TableHeaders titles={titles3}/>
-                        </thead>
-                        <tbody>
-                            <TableBodyData data={copyData3}/>
-                        </tbody>
-                    </table>
-                </div>
-                <div className="Buttons">
-                    <button onClick={(e) => this.nextFilterData3('<')} className="Button-option">
-                        Prev
-                    </button>
-
-                    <button onClick={(e) =>this.nextFilterData3('>')} className="Button-option">
-                        Next
-                    </button>
-                </div>
-
+            { cancel3?
+                        <CancelRequest/>
+                        :
+                        <React.Fragment>
+                            <TableContent titles={titles3} copyData={copyData3}/>
+                            <TablePagButton fun={this.nextFilterData3}/>
+                        </React.Fragment>
+            }
             </React.Fragment>;
         }
         else return true

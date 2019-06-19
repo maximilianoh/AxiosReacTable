@@ -3,6 +3,7 @@ import TableSimple from './TableSimple';
 import HookSimpleTable from './HookSimpleTable';
 import TableSimpleAsyncAwait from './TableSimpleAsyncAwait';
 import HookSimpleTableAsyncAwait from './HookSimpleTableAsyncAwait';
+import RequestComponent from './RequestComponent';
 class OptionMenu extends React.Component {
     constructor(props) {
         super(props);
@@ -16,12 +17,14 @@ class OptionMenu extends React.Component {
 
     showComponent=()=>{
         let {option}=this.state;
-        
-        if (option==='1') return <TableSimple/>;
-        else if (option==='2') return <HookSimpleTable/>;
-        else if (option==='3') return <TableSimpleAsyncAwait/>;
-        else if (option==='4') return <HookSimpleTableAsyncAwait/>;
-        return true
+
+        let Component;
+        if (option==='1') Component= TableSimple;
+        else if (option==='2') Component= HookSimpleTable;
+        else if (option==='3') Component= TableSimpleAsyncAwait;
+        else if (option==='4') Component= HookSimpleTableAsyncAwait;
+        else return true;
+        return <RequestComponent Component={Component}/>
     }
 
     render() {
@@ -40,12 +43,14 @@ class OptionMenu extends React.Component {
                     <button onClick={(e) => this.select('4')} className="Button-option">
                         HookSimpleTableAsyncAwait
                     </button>
+                    <button onClick={(e) => this.select('')} className="Button-option">
+                        Reset
+                    </button>
                 </div>
-                <div className="App-content">
                 {
                     this.showComponent()
                 }
-                </div>
+
                 
             </React.Fragment>
         );
