@@ -1,0 +1,72 @@
+*{
+  padding: 0px;
+  margin:  0px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-content {
+  background-color: #282c34;
+  min-height: 91vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.Header-option{
+  background-color: #282c34;
+  height: 5vh;
+  padding: 2vh;
+}
+
+.Button-option{
+  padding: 1%;
+  margin: 1%;
+}
+
+.Button-pag{
+  flex-grow: 1;
+  padding: 1%;
+  margin: 1%;
+
+}
+
+.Buttons{
+  width: 40%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+table{
+  width: 100%;
+}
+
+tr{
+  height: 30%;
+}
+
+.Table-div{
+  width: 80%;
+  height: 300px;
+}
