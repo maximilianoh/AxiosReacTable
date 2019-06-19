@@ -31,9 +31,13 @@ function HookSimpleTableAsyncAwait() {
 
     useEffect(() => {
         const getPosts = async () => {
-            let result = await axios.get('https://jsonplaceholder.typicode.com/users');
-            setData4(result.data);
-            setDataLoaded4(true);
+            try {
+                let result = await axios.get('https://jsonplaceholder.typicode.com/users');
+                setData4(result.data);
+                setDataLoaded4(true);
+            } catch(error) {
+             console.log(error)
+            }
         }
         getPosts();
     }, [])

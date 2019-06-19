@@ -35,7 +35,11 @@ function HookSimpleTable() {
             .then(result => {
                 setData2(result.data);
                 setDataLoaded2(true);
-            });
+            })
+            .catch(e => {
+                console.log(e);
+            })
+            ;
         }
         getPosts();
     }, [])

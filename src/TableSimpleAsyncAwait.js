@@ -33,9 +33,14 @@ class TableSimpleAsyncAwait extends React.Component {
     }
     
     async componentDidMount() {
-        let res = await axios.get('https://jsonplaceholder.typicode.com/users');
-        this.setState({ data3: res.data });
-        this.setState({ loaded3: true })
+        try {
+            let res = await axios.get('https://jsonplaceholder.typicode.com/users');
+            this.setState({ data3: res.data });
+            this.setState({ loaded3: true })
+        } catch(error) {
+             console.log(error)
+        }
+        
     }
 
     componentDidUpdate(prevProps, prevState) {

@@ -39,7 +39,10 @@ class TableSimple extends React.Component {
                 this.setState({ data: response.data });
                 //this.changeFilerData(0);
                 this.setState({ loaded: true });
-			});
+			})
+            .catch(e => {
+                console.log(e);
+            });
     }
     componentDidUpdate(prevProps, prevState) {
         if (prevState.initIndex !== this.state.initIndex || prevState.data!==this.state.data) {
