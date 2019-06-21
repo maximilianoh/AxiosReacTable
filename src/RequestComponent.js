@@ -41,13 +41,13 @@ class RequestComponent extends React.Component {
             <React.Fragment>
             <div className="Header-option">
            		<button onClick={(e) => this.select('cancel')} className="Button-option">
-                        Cancel Request
+                        Cancel GET Request
                 </button>
                 <button onClick={(e) => this.select('reset')} className="Button-option">
-                        Reset Token
+                        Reset GET Token
                 </button>
                 <button onClick={(e) => this.select('show')} className="Button-option">
-                        Do Request
+                        Do GET Request
                 </button>
              </div>
              <div className="App-content">

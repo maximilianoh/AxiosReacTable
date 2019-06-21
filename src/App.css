@@ -11,7 +11,7 @@ body{
 }
 
 .App-content {
-  min-height: 82vh;
+  min-height: 72vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,7 +33,6 @@ body{
   }
 }
 .Header-option{
-  height: 5vh;
   padding: 2vh;
 }
 
@@ -55,7 +54,6 @@ body{
 
 td, th {
   border: 1px solid #dddddd;
-  text-align: left;
   padding: 8px;
 }
 
@@ -70,4 +68,53 @@ tr{
 .Table-div{
   width: 80%;
   height: 350px;
+}
+
+.addUserClass {
+  width: 100%;
+}
+
+.addUserClass input,label {
+  margin-right: 2%;
+  
+}
+
+.addUserClass label {
+  width: 40%;
+  display: inline-block;
+}
+
+.addUserClass input {
+  width: 50%;
+}
+
+.left {
+  padding: 1em;
+  text-align: left;
+  width: 80%;
+}
+
+.right {
+  padding: 1em;  
+  width: 18%;
+}
+
+.parent {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid #333;
+  align-items: center;
+  width: 90%;
+}
+
+.bottonAdd{
+  padding: 10%;
+}
+
+.editUserClass input{
+  width: 50%;
+}
+
+input{
+  text-align: center;
 }

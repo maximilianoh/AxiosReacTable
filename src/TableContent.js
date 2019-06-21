@@ -3,7 +3,7 @@ import TableHeaders from './TableHeaders.js';
 import TableBodyData from './TableBodyData.js';
 
 function TableContent(props) { 
-	let {titles,copyData}=props
+	let {titles,copyData,func}=props
 	return (
 		<div className="Table-div">
 			<table>
@@ -11,7 +11,7 @@ function TableContent(props) {
 					<TableHeaders titles={titles}/>
 				</thead>
 				<tbody>
-					<TableBodyData data={copyData}/>
+					<TableBodyData data={copyData} func={func}/>
 				</tbody>
 			</table>
 		</div>

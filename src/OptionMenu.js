@@ -33,7 +33,7 @@ class OptionMenu extends React.Component {
                 <div className="Header-option">
                     <button onClick={(e) => this.select('1')} className="Button-option">
                         TableSimple
-                        </button>
+                    </button>
                     <button onClick={(e) => this.select('2')} className="Button-option">
                         HookSimpleTable
                     </button>
