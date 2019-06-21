@@ -167,7 +167,9 @@ class TableSimple extends React.Component {
         else{
             this.setState({ wrongA: false }); 
         }
-        axios.post('https://jsonplaceholder.typicode.com/users/', objectAdd)
+        let conf={headers: {'accept': 'application/json'}};
+        console.log(conf)
+        axios.post('https://jsonplaceholder.typicode.com/users/', objectAdd,conf)
         .then(response => {
             let objectCopy=[...data,response.data];
             this.setState({ data: objectCopy });
@@ -251,7 +253,7 @@ class TableSimple extends React.Component {
                                 :
                                 true
                             }
-                            <TableContent titles={titles} copyData={copyData} func={this.showInput}/>
+                            <TableContent titles={titles} copyData={copyData} func={this.showInput} classCss="Table-div1"/>
                             <TablePagButton fun={this.nextFilterData}/>
                             
                         </React.Fragment>

@@ -253,7 +253,7 @@ class TableSimpleAsyncAwait extends React.Component {
                                 :
                                 true
                             }
-                            <TableContent titles={titles3} copyData={copyData3} func={this.showInput3}/>
+                            <TableContent titles={titles3} copyData={copyData3} func={this.showInput3} classCss="Table-div3"/>
                             <TablePagButton fun={this.nextFilterData3}/>
                         </React.Fragment>
             }

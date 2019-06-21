@@ -243,7 +243,7 @@ function HookSimpleTable(props) {
                                 :
                                 true
                             }
-                            <TableContent titles={titles2} copyData={dataFilter2} func={funShowInput2}/>
+                            <TableContent titles={titles2} copyData={dataFilter2} func={funShowInput2} classCss="Table-div2"/>
                             <TablePagButton fun={nextFilterData2}/>
                         </React.Fragment>
             }

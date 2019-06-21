@@ -3,9 +3,9 @@ import TableHeaders from './TableHeaders.js';
 import TableBodyData from './TableBodyData.js';
 
 function TableContent(props) { 
-	let {titles,copyData,func}=props
+	let {titles,copyData,func,classCss}=props
 	return (
-		<div className="Table-div">
+		<div className={classCss}>
 			<table>
 				<thead>
 					<TableHeaders titles={titles}/>

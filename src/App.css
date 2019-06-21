@@ -33,7 +33,7 @@ body{
   }
 }
 .Header-option{
-  padding: 2vh;
+  padding: 1vh;
 }
 
 .Button-option{
@@ -65,9 +65,26 @@ tr{
   height: 30%;
 }
 
-.Table-div{
+.Table-div1{
   width: 80%;
-  height: 350px;
+  height: 30vh;
+}
+
+.Table-div2{
+  width: 80%;
+  height: 50vh;
+}
+
+
+.Table-div3{
+  width: 80%;
+  height: 40vh;
+}
+
+
+.Table-div4{
+  width: 80%;
+  height: 30vh;
 }
 
 .addUserClass {

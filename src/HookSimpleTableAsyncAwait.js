@@ -243,7 +243,7 @@ function HookSimpleTableAsyncAwait(props) {
                                 :
                                 true
                             }
-                            <TableContent titles={titles4} copyData={dataFilter4} func={funShowInput4}/>
+                            <TableContent titles={titles4} copyData={dataFilter4} func={funShowInput4} classCss="Table-div4"/>
                             <TablePagButton fun={nextFilterData4}/>
                         </React.Fragment>
             }
