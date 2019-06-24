@@ -66,7 +66,7 @@ class TableSimple extends React.Component {
     componentDidMount() {
         this._isMounted = true
         if(this.props.mode==="cancel"){
-            this.props.source.cancel('Operation canceled');
+            this.props.source.cancel('Request canceled');
             this.setState({ cancel: true });
             this.setState({ loaded: true });
 
@@ -79,8 +79,8 @@ class TableSimple extends React.Component {
             }
         })
         .catch(function (thrown) {
-          if ((thrown)) {
-            console.log('Request canceled', thrown.message);
+          if (axios.isCancel(thrown)) {
+            console.log(thrown.message);
           } else {
             console.log(thrown)
           }

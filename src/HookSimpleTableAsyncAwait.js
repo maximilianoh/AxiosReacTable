@@ -63,7 +63,7 @@ function HookSimpleTableAsyncAwait(props) {
         const getPosts = async () => {
             try {
                 if(props.mode==="cancel"){
-                    props.source.cancel('Operation canceled');
+                    props.source.cancel('Request canceled');
                     setDataLoaded4(true);
                     setCancel4(true);
                 }
@@ -74,7 +74,7 @@ function HookSimpleTableAsyncAwait(props) {
                 }
             } catch(thrown) {
              if (axios.isCancel(thrown)) {
-                console.log('Request canceled', thrown.message);
+                console.log(thrown.message);
               } else {
                 console.log(thrown)
               }

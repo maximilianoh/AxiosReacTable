@@ -61,7 +61,7 @@ function HookSimpleTable(props) {
     useEffect(() => {
         let isSubscribed = true
         if(props.mode==="cancel"){
-            props.source.cancel('Operation canceled');
+            props.source.cancel('Request canceled');
             setDataLoaded2(true);
             setCancel2(true);
         }
@@ -73,10 +73,13 @@ function HookSimpleTable(props) {
                     setDataLoaded2(true);
                 }
             })
-            .catch(e => {
-                console.log(e.message);
-            })
-            ;
+            .catch(thrown => {
+                if (axios.isCancel(thrown)) {
+                    console.log(thrown.message);
+                } else {
+                    console.log(thrown)
+                }
+            });
         }
         getPosts();
         return () => isSubscribed = false

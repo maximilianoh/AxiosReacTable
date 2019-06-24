@@ -66,7 +66,7 @@ class TableSimpleAsyncAwait extends React.Component {
         this._isMounted = true
         try {
             if(this.props.mode==="cancel"){
-                this.props.source.cancel('Operation canceled');
+                this.props.source.cancel('Request canceled');
                 this.setState({ cancel3: true });
                 this.setState({ loaded3: true });
             }
@@ -77,7 +77,7 @@ class TableSimpleAsyncAwait extends React.Component {
             }
         } catch(thrown) {
              if (axios.isCancel(thrown)) {
-                console.log('Request canceled', thrown.message);
+                console.log(thrown.message);
               } else {
                 console.log(thrown)
               }
